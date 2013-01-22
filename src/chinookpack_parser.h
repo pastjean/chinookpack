@@ -1,6 +1,8 @@
 #ifndef chinookpack_parser_h
 #define chinookpack_parser_h
 
+#include <sys/types.h>
+
 typedef struct chinookpack_parser {
   int cs;
   // 11 bits = 2048 ids
