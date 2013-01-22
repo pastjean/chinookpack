@@ -35,6 +35,23 @@ Available types
         <td>false</td>
         <td>0xc2</td>
     </tr>
+    <tr>
+        <td rowspan="4"></td>
+        <td>uint8</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>uint16</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>int8</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>int16</td>
+        <td></td>
+    </tr>
 </table>
 
 - uint8
