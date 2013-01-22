@@ -10,7 +10,7 @@
 
 ChinookPack : Encoder/Decoder for a simplified [MessagePack][msgpack] serialization format
 
-The [MessagePack specification][msgpackspec] is more declarative about the format](msgpackspec)
+The [MessagePack specification][msgpackspec] is more declarative about the [format][msgpackspec]
 
 [msgpack]:http://msgpack.org/
 [msgpackspec]:http://wiki.msgpack.org/display/MSGPACK/Format+specification
