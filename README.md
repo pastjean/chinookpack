@@ -29,38 +29,38 @@ Available types
     <tr>
         <td rowspan="2">Boolean</td>
         <td>true</td>
-        <td>`0xc3`</td>
+        <td><code>0xc3</code></td>
     </tr>
     <tr>
         <td>false</td>
-        <td>`0xc2`</td>
+        <td><code>0xc2</code></td>
     </tr>
     <tr>
         <td rowspan="4">Integer</td>
         <td>uint8</td>
-        <td> `0xcc` </td>
+        <td><code>0xcc</code></td>
     </tr>
     <tr>
         <td>uint16</td>
-        <td> `0xcd` </td>
+        <td><code>0xd0</code></td>
     </tr>
     <tr>
         <td>int8</td>
-        <td>`0xd0`</td>
+        <td><code>0xd0</code></td>
     </tr>
     <tr>
         <td>int16</td>
-        <td>`0xd1`</td>
+        <td><code>0xd1</code></td>
     </tr>
     <tr>
         <td>Floating Point</td>
         <td>float</td>
-        <td>0xca</td>
+        <td><code>0xca</code></td>
     </tr>
     <tr>
         <td>Raw bytes</td>
         <td>fix raw</td>
-        <td>101XXXXX</td>
+        <td><code>101XXXXX</code></td>
     </tr>
 </table>
 
