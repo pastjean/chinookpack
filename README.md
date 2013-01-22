@@ -18,6 +18,25 @@ The [MessagePack specification][msgpackspec] is more declarative about the [form
 Available types
 ===============
 
+<table>
+    <thead>
+        <th>
+            <td>Generic</td>
+            <td>Type</td>
+            <td>Encoded Form</td>
+        </th>
+    </thead>
+    <tr>
+        <td rowspan="2">Boolean</td>
+        <td>true</td>
+        <td>0xc3</td>
+    </tr>
+    <tr>
+        <td>false</td>
+        <td>0xc2</td>
+    </tr>
+</table>
+
 - uint8
 - uint16
 - int8
