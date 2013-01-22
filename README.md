@@ -21,7 +21,7 @@ Available types
 <table>
     <thead>
         <tr>
-            <th>Generic</th>
+            <th>Family</th>
             <th>Type</th>
             <th>Encoded Form</th>
         </tr>
@@ -51,6 +51,16 @@ Available types
     <tr>
         <td>int16</td>
         <td>`0xd1`</td>
+    </tr>
+    <tr>
+        <td>Floating Point</td>
+        <td>float</td>
+        <td>0xca</td>
+    </tr>
+    <tr>
+        <td>Raw bytes</td>
+        <td>fix raw</td>
+        <td>101XXXXX</td>
     </tr>
 </table>
 
@@ -137,8 +147,10 @@ Big endian IEEE 754 on 5 bytes
     +--------+--------+--------+--------+--------+
     => big-endian IEEE 754 single precision floating point number XXXXXXXX_XXXXXXXX_XXXXXXXX_XXXXXXXX
 
-raw bytes
+Raw bytes
 ---------
+
+### fix raw
 
 raw bytes up to 31 bytes.
 
