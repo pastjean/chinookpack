@@ -21,13 +21,13 @@ Available types
 <table>
     <thead>
         <tr>
-            <th>Family</th>
+            <th></th>
             <th>Type</th>
             <th>Encoded Form</th>
         </tr>
     </thead>
     <tr>
-        <td rowspan="2">Boolean</td>
+        <th rowspan="2">Boolean</th>
         <td>true</td>
         <td><code>0xc3</code></td>
     </tr>
@@ -36,7 +36,7 @@ Available types
         <td><code>0xc2</code></td>
     </tr>
     <tr>
-        <td rowspan="4">Integer</td>
+        <th rowspan="4">Integer</th>
         <td>uint8</td>
         <td><code>0xcc</code></td>
     </tr>
@@ -53,12 +53,12 @@ Available types
         <td><code>0xd1</code></td>
     </tr>
     <tr>
-        <td>Floating Point</td>
+        <th>Floating Point</th>
         <td>float</td>
         <td><code>0xca</code></td>
     </tr>
     <tr>
-        <td>Raw bytes</td>
+        <th>Raw bytes</th>
         <td>fix raw</td>
         <td><code>101XXXXX</code></td>
     </tr>
