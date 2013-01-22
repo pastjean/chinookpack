@@ -1,3 +1,7 @@
+*.swp
 *.o
 *.a
+*.d
 .DS_Store
+
+test/test-runner
