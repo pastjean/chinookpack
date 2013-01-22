@@ -38,11 +38,11 @@ Available types
     <tr>
         <td rowspan="4">Integer</td>
         <td>uint8</td>
-        <td>`0xcc`</td>
+        <td> `0xcc` </td>
     </tr>
     <tr>
         <td>uint16</td>
-        <td>`0xcd`</td>
+        <td> `0xcd` </td>
     </tr>
     <tr>
         <td>int8</td>
@@ -63,15 +63,6 @@ Available types
         <td>101XXXXX</td>
     </tr>
 </table>
-
-- uint8
-- uint16
-- int8
-- int16
-- boolean
-- float
-
-- raw bytes
 
 
 Encoding
