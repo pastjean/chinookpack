@@ -20,37 +20,37 @@ Available types
 
 <table>
     <thead>
-        <th>
-            <td>Generic</td>
-            <td>Type</td>
-            <td>Encoded Form</td>
-        </th>
+        <tr>
+            <th>Generic</th>
+            <th>Type</th>
+            <th>Encoded Form</th>
+        </tr>
     </thead>
     <tr>
         <td rowspan="2">Boolean</td>
         <td>true</td>
-        <td>0xc3</td>
+        <td>`0xc3`</td>
     </tr>
     <tr>
         <td>false</td>
-        <td>0xc2</td>
+        <td>`0xc2`</td>
     </tr>
     <tr>
-        <td rowspan="4"></td>
+        <td rowspan="4">Integer</td>
         <td>uint8</td>
-        <td></td>
+        <td>`0xcc`</td>
     </tr>
     <tr>
         <td>uint16</td>
-        <td></td>
+        <td>`0xcd`</td>
     </tr>
     <tr>
         <td>int8</td>
-        <td></td>
+        <td>`0xd0`</td>
     </tr>
     <tr>
         <td>int16</td>
-        <td></td>
+        <td>`0xd1`</td>
     </tr>
 </table>
 
@@ -102,6 +102,7 @@ signed 8-bit integer on 2 bytes
 ### int16
 
 signed 16-bit big-endian integer on 3 bytes
+
     +--------+--------+--------+
     |  0xd1  |XXXXXXXX|XXXXXXXX|
     +--------+--------+--------+
