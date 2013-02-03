@@ -42,7 +42,7 @@ Available types
     </tr>
     <tr>
         <td>uint16</td>
-        <td><code>0xd0</code></td>
+        <td><code>0xcd</code></td>
     </tr>
     <tr>
         <td>int8</td>

@@ -1,21 +1,39 @@
 #include "chinookpack_parser.h"
 
+/** Machine **/
 
+%%{
+  machine chinookpack_parser;
+
+  ttrue=0xc3;
+  tfalse=0xc2;
+  tuint8=0xcc;
+  tuint16=0xc0;
+  tint8;
+  tint16;
+  tfloat;
+  tfixraw;
+  main := ( ttrue | tfalse);
+
+  action true{}
+  action false{}
+}%%
 
 int chinookpack_parser_init(chinookpack_parser *parser){
-	int cs = 0;
 	parser->cs= cs;
 	parser->can_id=0;
 	parser->can_length=0;
-    parser->pack_type=0;
-    parser->pack_data=0;
+  parser->pack_type=0;
+  parser->pack_data=0;
 
 	return(1);
 }
 
 size_t chinookpack_parser_execute(chinookpack_parser *parser, const char* data,
-                                 size_t length){
- return 0;
+                                 size_t len){
+  if(len == 0) return 0;
+
+  return 0;
 }
 
 
