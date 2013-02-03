@@ -15,6 +15,19 @@ The [MessagePack specification][msgpackspec] is more declarative about the [form
 [msgpack]:http://msgpack.org/
 [msgpackspec]:http://wiki.msgpack.org/display/MSGPACK/Format+specification
 
+The CAN Protocol
+================
+
+Definition of our can data format
+
+### Fields
+
+    {
+      can id, // ID of the logical device, a different id is used to set or get a value
+      can length, // The length of the data field
+      data field // The data encoded with chinookpack
+    }
+
 Available types
 ===============
 
