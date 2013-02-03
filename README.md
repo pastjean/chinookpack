@@ -27,6 +27,13 @@ Definition of our can data format
       can length, // The length of the data field
       data field // The data encoded with chinookpack
     }
+Protocol segmentation in bit
+
+    ... | can id | ... | length | ... |  data field   |
+    ... |   11   | ... |   4    | ... |     1 - 64    |
+
+    **size in bit**
+
 
 Available types
 ===============
