@@ -3,17 +3,20 @@
 
 #include <sys/types.h>
 
-typedef struct chinookpack_parser {
-  // 11 bits = 2048 ids
-  //
-  // Each element has a different id for different actions which is defined in
-  // a table
-  int can_id;
-  // 4 bits
-  int can_length;
+typedef enum{
+  tbool,
+  tuint8,
+  tuint16,
+  tint8,
+  tint16,
+  tfloat,
+  traw,
+} chinookpack_types;
 
-  int pack_type;
+typedef struct chinookpack_parser {
+  chinookpack_types pack_type;
   int pack_data;
+  uint8 pack_data_length;
 
 } chinookpack_parser;
 
@@ -28,4 +31,5 @@ void** typestable[]{
   {}
   0
 }
+
 #endif

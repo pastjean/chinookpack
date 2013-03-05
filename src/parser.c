@@ -1,23 +1,24 @@
-#include "chinookpack_parser.h"
+#include "chinookpack/parser.h"
 
-/** Machine **/
 
-%%{
-  machine chinookpack_parser;
+// Booleans
+#define TRUE_PREDICATE 0xC3
+#define FALSE_PREDICATE 0xC2
 
-  ttrue=0xc3;
-  tfalse=0xc2;
-  tuint8=0xcc;
-  tuint16=0xc0;
-  tint8;
-  tint16;
-  tfloat;
-  tfixraw;
-  main := ( ttrue | tfalse);
+// Unsigned Ints
+#define UINT8_PREDICATE 0xCC
+#define UINT16_PREDICATE 0xC0
 
-  action true{}
-  action false{}
-}%%
+// Ints
+#define INT8_PREDICATE 0xD0
+#define INT16_PREDICATE 0xD1
+
+// Floats
+#define FLOAT_PREDICATE 0xCA
+
+// Raw bytes
+#define RAW_PREDICATE 0xA0
+
 
 int chinookpack_parser_init(chinookpack_parser *parser){
 	parser->cs= cs;
