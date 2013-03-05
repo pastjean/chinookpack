@@ -52,7 +52,7 @@ typedef struct tt_Suite{
  tt_test *tail;
 } tt_suite;
 
-tt_suite* tt_new_suite();
+tt_suite* tt_suite_new();
 void tt_add(tt_suite* suite, char* test_name, void(*cb)());
     
 

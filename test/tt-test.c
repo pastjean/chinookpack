@@ -2,7 +2,7 @@
 
 volatile int test_failed=0;
 
-tt_suite* tt_new_suite(){
+tt_suite* tt_suite_new(){
   tt_suite* suite = malloc(sizeof(tt_suite));
 
   suite->head = NULL;
@@ -39,6 +39,7 @@ int tt_run(tt_suite* suite,int argc, char** argv){
     test_failed = 0;
 
     printf("Running: %s ", t->name);
+    t->test();
 
     if(test_failed){
       failed++;

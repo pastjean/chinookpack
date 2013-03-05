@@ -41,7 +41,9 @@ all: test
 # Compile the library itself
 # ---------------------------------------------------------------------
 
-CHINOOKPACK_OBJ=src/obj/chinookpack_parser.o
+CHINOOKPACK_OBJ=
+INCLUDES=-Isrc
+
 
 -include $(wildcard src/obj/*.d)
 
@@ -69,18 +71,19 @@ test/obj/%.o: test/%.c test/obj
 # TEST RUNNER
 # ---------------------------------------------------------------------
 
+TEST_BIN := test-chinookpack
 # Task that runs the tests
-test: test/test-runner
-	$(QUIET_MAKE) test/test-runner
+test: $(TEST_BIN)
+	$(QUIET_MAKE) ./$(TEST_BIN)
 
 # Task that compiles the test runner
-test/test-runner: $(CHINOOKPACK_OBJ) $(TEST_OBJ)
-	@echo $(MAKECOLOR)MAKE$(ENDCOLOR) $(BINCOLOR)test$(ENDCOLOR)
-	$(QUIET_LINK) $(CC) $(CFLAGS) -o test/test-runner $(TEST_OBJ) $(INCLUDES) $(FUJIN_LIB_DEPS)
+$(TEST_BIN): $(CHINOOKPACK_OBJ) $(TEST_OBJ)
+	@echo $(MAKECOLOR)MAKE$(ENDCOLOR) $(BINCOLOR)test-chinookpack$(ENDCOLOR)
+	$(QUIET_LINK) $(CC) $(CFLAGS) -o $(TEST_BIN) $(TEST_OBJ) $(INCLUDES) $(FUJIN_LIB_DEPS)
 
 
 clean:
-	rm -rf src/obj test/obj
+	rm -rf src/obj test/obj $(TEST_BIN)
 
 
 
