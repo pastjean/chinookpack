@@ -62,56 +62,62 @@ void test_packer(){
 
 // Nil
 void test_pack_nil(){
-  int data[10];
+  char data[10];
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
-  ASSERT("Packing a nil should succeed",0==chinookpack_pack_nil(&pk));
-  int* output = (int*) pk.data;
-  ASSERT("There should be an encoded nil in the data", 0xc0 ==output[0]);
+  ASSERT_EQ("Packing a nil should succeed",0, chinookpack_pack_nil(&pk));
+  ASSERT_EQ("There should be an encoded nil in the data", (char)0xc0, data[0]);
 }
 // Boolean 
 void test_pack_true(){
-  int data[10];
+  char data[10];
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
-  ASSERT("Packing a true should succeed",0==chinookpack_pack_true(&pk));
-  int* output = (int*) pk.data;
-  ASSERT("There should be an encoded true in the data", 0xc3 == output[0]);
+  ASSERT_EQ("Packing a true should succeed",0,chinookpack_pack_true(&pk));
+  ASSERT_EQ("There should be an encoded true in the data", (char)0xc3, data[0]);
 }
 void test_pack_false(){
-  int data[10];
+  char data[10];
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
-  ASSERT("Packing a false should succeed",0==chinookpack_pack_false(&pk));
-  int* output = (int*) pk.data;
-  ASSERT("There should be an encoded false in the data", 0xc2 == output[0]);
+  ASSERT_EQ("Packing a false should succeed",0,chinookpack_pack_false(&pk));
+  ASSERT_EQ("There should be an encoded false in the data", (char)0xc2, data[0]);
 }
+
 // Integer
 void test_pack_uint8(){
-  int data[10];
+  char data[10];
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
   // On test avec min et max de uint8
   ASSERT("uint8 : packing should succeed",0==chinookpack_pack_uint8(&pk,0x00));
-  int* output = (int*) pk.data;
-  ASSERT("uint8 : type header", 0xcc == output[0]);
-  ASSERT("uint8 : content", 0x00 == output[1]);
+  ASSERT_EQ("uint8 : type header", (char)0xcc, data[0]);
+  ASSERT_EQ("uint8 : content", (char)0x00, data[1]);
 
-  chinookpack_pack_uint8(&pk, 8);
-  ASSERT("asd",0!=0);
+  ASSERT("uint8 : packing should succeed",0==chinookpack_pack_uint8(&pk,0xFF));
+  ASSERT_EQ("uint8 : type header", (char)0xcc, data[0]);
+  ASSERT_EQ("uint8 : content", (char)0xFF, data[1]);
 }
-/* void test_pack_uint16(){ */
-/*   int data[10]; */
-/*   chinookpack_packer pk; */
-/*   chinookpack_packer_init(&pk, data, array_10_write); */
+void test_pack_uint16(){
+  char data[10];
+  chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
 
-/*   chinookpack_pack_uint16(&pk, 8); */
-/*   ASSERT("asd",0!=0); */
-/* } */
+  // On test avec min et max de uint8
+  ASSERT("uint16 : packing should succeed",0==chinookpack_pack_uint16(&pk,0x00));
+  ASSERT_EQ("uint16 : type header", (char)0xd1, data[0]);
+  ASSERT_EQ("uint16 : content", (char)0x00, data[1]);
+  ASSERT_EQ("uint16 : content", (char)0x00, data[2]);
+
+  ASSERT("uint16 : packing should succeed",0==chinookpack_pack_uint16(&pk,0xFFFF));
+  ASSERT_EQ("uint16 : type header", (char)0xd1, data[0]);
+  ASSERT_EQ("uint16 : content", (char)0xFF, data[1]);
+  ASSERT_EQ("uint16 : content", (char)0xFF, data[2]);
+}
 /* void test_pack_int8(){ */
 /*   int data[10]; */
 /*   chinookpack_packer pk; */
@@ -165,6 +171,7 @@ int main(int argc,char** argv){
   tt_add(suite,"true packing",&test_pack_true);
   tt_add(suite,"false packing",&test_pack_false);
   tt_add(suite,"uint8 packing",&test_pack_uint8);
+  tt_add(suite,"uint16 packing",&test_pack_uint16);
   
   return tt_run(suite,argc,argv);
 }

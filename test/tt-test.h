@@ -19,6 +19,21 @@
     fflush(stderr);               \
   } while(0);
 #endif
+/* Define our own assert which breaks nothing and doesn't get optimized */
+#define ASSERT_EQ(message,expected,actual)                \
+ do {                                                     \
+  if (expected != actual) {                               \
+    fprintf(stderr,                                       \
+            "%s :: in %s on line %d: %s != %s"            \
+            " expected %d, got %d\n",                     \
+            message,                                      \
+            __FILE__,                                     \
+            __LINE__,                                     \
+            #expected,#actual,                            \
+           (int)#expected,(int)#actual);                  \
+    test_failed++;                                        \
+  }                                                       \
+ } while (0)
 
 /* Define our own assert which breaks nothing and doesn't get optimized */
 #define ASSERT(message,expr)                              \
