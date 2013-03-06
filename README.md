@@ -6,7 +6,7 @@
         |_____|                                                    |_____|                            
           
 
-[![Build Status](https://secure.travis-ci.org/pastjean/chinookpack.png)](http://travis-ci.org/pastjean/chinookpack)
+[![Build Status](https://travis-ci.org/pastjean/chinookpack.png?branch=master)](https://travis-ci.org/pastjean/chinookpack)
 
 ChinookPack : Encoder/Decoder for a simplified [MessagePack][msgpack] serialization format
 
