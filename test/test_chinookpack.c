@@ -109,31 +109,36 @@ void test_pack_uint16(){
 
   // On test avec min et max de uint8
   ASSERT("uint16 : packing should succeed",0==chinookpack_pack_uint16(&pk,0x00));
-  ASSERT_EQ("uint16 : type header", (char)0xd1, data[0]);
+  ASSERT_EQ("uint16 : type header", (char)0xcd, data[0]);
   ASSERT_EQ("uint16 : content", (char)0x00, data[1]);
   ASSERT_EQ("uint16 : content", (char)0x00, data[2]);
 
   ASSERT("uint16 : packing should succeed",0==chinookpack_pack_uint16(&pk,0xFFFF));
-  ASSERT_EQ("uint16 : type header", (char)0xd1, data[0]);
+  ASSERT_EQ("uint16 : type header", (char)0xcd, data[0]);
   ASSERT_EQ("uint16 : content", (char)0xFF, data[1]);
   ASSERT_EQ("uint16 : content", (char)0xFF, data[2]);
 }
-/* void test_pack_int8(){ */
-/*   int data[10]; */
-/*   chinookpack_packer pk; */
-/*   chinookpack_packer_init(&pk, data, array_10_write); */
+void test_pack_int8(){
+  char data[10];
+  chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
 
-/*   chinookpack_pack_int8(&pk, -8); */
-/*   ASSERT("asd",0!=0); */
-/* } */
-/* void test_pack_int16(){ */
-/*   int data[10]; */
-/*   chinookpack_packer pk; */
-/*   chinookpack_packer_init(&pk, data, array_10_write); */
+  // On test avec min et max de uint8
+  ASSERT("int8 : packing should succeed",0==chinookpack_pack_int8(&pk,127));
+  ASSERT_EQ("int8 : type header", (char)0xd0, data[0]);
+  ASSERT_EQ("int8 : content", (char)127, data[1]);
 
-/*   chinookpack_pack_int16(&pk, -8); */
-/*   ASSERT("asd",0!=0); */
-/* } */
+  ASSERT("int8 : packing should succeed",0==chinookpack_pack_int8(&pk,-128));
+  ASSERT_EQ("int8 : type header", (char)0xd0, data[0]);
+  ASSERT_EQ("int8 : content", (char)(256-128), data[1]);
+
+  ASSERT("int8 : packing should succeed",0==chinookpack_pack_int8(&pk,-1));
+  ASSERT_EQ("int8 : type header", (char)0xd0, data[0]);
+  ASSERT_EQ("int8 : content", (char)(256-1), data[1]);
+}
+void test_pack_int16(){
+  ASSERT("Not implemented",0!=0);
+}
 
 /* // Float */
 /* void test_pack_float(){ */
@@ -172,6 +177,8 @@ int main(int argc,char** argv){
   tt_add(suite,"false packing",&test_pack_false);
   tt_add(suite,"uint8 packing",&test_pack_uint8);
   tt_add(suite,"uint16 packing",&test_pack_uint16);
+  tt_add(suite,"int8 packing",&test_pack_int8);
+  tt_add(suite,"int16 packing",&test_pack_int16);
   
   return tt_run(suite,argc,argv);
 }

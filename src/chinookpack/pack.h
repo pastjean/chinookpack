@@ -120,7 +120,7 @@ static int chinookpack_pack_uint8(chinookpack_packer* pk, uint8_t d){
 }
 
 static int chinookpack_pack_uint16(chinookpack_packer* pk, uint16_t d){
-  char uint16data[3] = { 0xd1, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0x00ff) };
+  char uint16data[3] = { 0xcd, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0x00ff) };
 
   return pk->callback(pk->data, uint16data,3);
 }
