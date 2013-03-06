@@ -62,22 +62,33 @@ void test_packer(){
 
 // Nil
 void test_pack_nil(){
+  int data[10];
   chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
 
-//  ASSERT("Packing a nil should succed",0==chinookpack_pack_nil(&pk));
+  ASSERT("Packing a nil should succeed",0==chinookpack_pack_nil(&pk));
+  int* output = (int*) pk.data;
+  ASSERT("There should be an encoded nil in the data", 0xc0 ==output[0]);
 }
 // Boolean 
-/* void test_pack_true(){ */
-/*   chinookpack_packer pk; */
+void test_pack_true(){
+  int data[10];
+  chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
 
-/*   chinookpack_pack_true(&pk); */
-/*   ASSERT("asd",0!=0); */
-/* } */
-/* void test_pack_false(){ */
-/*   chinookpack_packer pk; */
-/*   chinookpack_pack_false(&pk); */
-/*   ASSERT("asd",0!=0); */
-/* } */
+  ASSERT("Packing a true should succeed",0==chinookpack_pack_true(&pk));
+  int* output = (int*) pk.data;
+  ASSERT("There should be an encoded true in the data", 0xc3 == output[0]);
+}
+void test_pack_false(){
+  int data[10];
+  chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
+
+  ASSERT("Packing a false should succeed",0==chinookpack_pack_false(&pk));
+  int* output = (int*) pk.data;
+  ASSERT("There should be an encoded false in the data", 0xc2 == output[0]);
+}
 /* // Integer */
 /* void test_pack_uint8(){ */
 /*   chinookpack_packer pk; */
@@ -138,6 +149,8 @@ int main(int argc,char** argv){
   // Add your test functions here
   tt_add(suite,"test packer structure",&test_packer);
   tt_add(suite,"nil packing",&test_pack_nil);
+  tt_add(suite,"true packing",&test_pack_true);
+  tt_add(suite,"false packing",&test_pack_false);
   
   return tt_run(suite,argc,argv);
 }

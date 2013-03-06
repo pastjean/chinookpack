@@ -96,11 +96,20 @@ inline void chinookpack_packer_free(chinookpack_packer* pk)
 
 // Nil
 static int chinookpack_pack_nil(chinookpack_packer* pk){
+  uint8_t nildata[] = {0xc0};
+
+  return pk->callback(pk->data, nildata,1);
 }
 
 // Boolean 
 static int chinookpack_pack_true(chinookpack_packer* pk){
+  uint8_t nildata[] = {0xc3};
+
+  return pk->callback(pk->data, nildata,1);
 }
 static int chinookpack_pack_false(chinookpack_packer* pk){
+  uint8_t nildata[] = {0xc2};
+
+  return pk->callback(pk->data, nildata,1);
 }
 #endif
