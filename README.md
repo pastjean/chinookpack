@@ -15,25 +15,8 @@ The [MessagePack specification][msgpackspec] is more declarative about the [form
 [msgpack]:http://msgpack.org/
 [msgpackspec]:http://wiki.msgpack.org/display/MSGPACK/Format+specification
 
-The CAN Protocol
-================
 
-Definition of our can data format
-
-### Fields
-
-    {
-      can id, // ID of the logical device, a different id is used to set or get a value
-      can length, // The length of the data field
-      data field // The data encoded with chinookpack
-    }
-Protocol segmentation in bit
-
-    ... | can id | ... | length | ... |  data field   |
-    ... |   11   | ... |   4    | ... |     1 - 64    |
-
-    **size in bit**
-
+Disclaimer : *This project is a learning project primarily to learn and try to gain performance on a microcontroller, consider using the real msgpack implementation which is more tested. A large part of the code was taken and adapted from msgpack.*
 
 Available types
 ===============
@@ -177,3 +160,23 @@ Usage
     chinookpack_parser_finish
     chinookpack_parser_execute
     chinookpack_parser_has_errors
+
+The CAN Protocol
+================
+
+Definition of our can data format
+
+### Fields
+
+    {
+      can id, // ID of the logical device, a different id is used to set or get a value
+      can length, // The length of the data field
+      data field // The data encoded with chinookpack
+    }
+Protocol segmentation in bit
+
+    ... | can id | ... | length | ... |  data field   |
+    ... |   11   | ... |   4    | ... |     1 - 64    |
+
+    **size in bit**
+
