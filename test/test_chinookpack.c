@@ -89,28 +89,41 @@ void test_pack_false(){
   int* output = (int*) pk.data;
   ASSERT("There should be an encoded false in the data", 0xc2 == output[0]);
 }
-/* // Integer */
-/* void test_pack_uint8(){ */
-/*   chinookpack_packer pk; */
+// Integer
+void test_pack_uint8(){
+  int data[10];
+  chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
 
-/*   // On test avec min et max de uint8 */
-/*   chinookpack_pack_uint8(&pk, 8); */
-/*   ASSERT("asd",0!=0); */
-/* } */
+  // On test avec min et max de uint8
+  ASSERT("uint8 : packing should succeed",0==chinookpack_pack_uint8(&pk,0x00));
+  int* output = (int*) pk.data;
+  ASSERT("uint8 : type header", 0xcc == output[0]);
+  ASSERT("uint8 : content", 0x00 == output[1]);
+
+  chinookpack_pack_uint8(&pk, 8);
+  ASSERT("asd",0!=0);
+}
 /* void test_pack_uint16(){ */
+/*   int data[10]; */
 /*   chinookpack_packer pk; */
+/*   chinookpack_packer_init(&pk, data, array_10_write); */
 
 /*   chinookpack_pack_uint16(&pk, 8); */
 /*   ASSERT("asd",0!=0); */
 /* } */
 /* void test_pack_int8(){ */
+/*   int data[10]; */
 /*   chinookpack_packer pk; */
+/*   chinookpack_packer_init(&pk, data, array_10_write); */
 
 /*   chinookpack_pack_int8(&pk, -8); */
 /*   ASSERT("asd",0!=0); */
 /* } */
 /* void test_pack_int16(){ */
+/*   int data[10]; */
 /*   chinookpack_packer pk; */
+/*   chinookpack_packer_init(&pk, data, array_10_write); */
 
 /*   chinookpack_pack_int16(&pk, -8); */
 /*   ASSERT("asd",0!=0); */
@@ -151,6 +164,7 @@ int main(int argc,char** argv){
   tt_add(suite,"nil packing",&test_pack_nil);
   tt_add(suite,"true packing",&test_pack_true);
   tt_add(suite,"false packing",&test_pack_false);
+  tt_add(suite,"uint8 packing",&test_pack_uint8);
   
   return tt_run(suite,argc,argv);
 }
