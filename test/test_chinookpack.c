@@ -107,7 +107,6 @@ void test_pack_uint16(){
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
-  // On test avec min et max de uint8
   ASSERT("uint16 : packing should succeed",0==chinookpack_pack_uint16(&pk,0x00));
   ASSERT_EQ("uint16 : type header", (char)0xcd, data[0]);
   ASSERT_EQ("uint16 : content", (char)0x00, data[1]);
@@ -123,7 +122,6 @@ void test_pack_int8(){
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
-  // On test avec min et max de uint8
   ASSERT("int8 : packing should succeed",0==chinookpack_pack_int8(&pk,127));
   ASSERT_EQ("int8 : type header", (char)0xd0, data[0]);
   ASSERT_EQ("int8 : content", (char)127, data[1]);
@@ -137,7 +135,31 @@ void test_pack_int8(){
   ASSERT_EQ("int8 : content", (char)(256-1), data[1]);
 }
 void test_pack_int16(){
-  ASSERT("Not implemented",0!=0);
+  char data[10];
+  char answerParts[2];
+  chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
+
+  ASSERT("int16 : packing should succeed",0==chinookpack_pack_int16(&pk,32767));
+  ASSERT_EQ("int16 : type header", (char)0xd1, data[0]);
+  answerParts[0]= (32767 >> 8) & 0xff;
+  answerParts[1]= 32767 & 0xff;
+  ASSERT_EQ("int16 : content", answerParts[0], data[1]);
+  ASSERT_EQ("int16 : content", answerParts[1], data[2]);
+
+  ASSERT("int16 : packing should succeed",0==chinookpack_pack_int16(&pk,-32768));
+  ASSERT_EQ("int16 : type header", (char)0xd1, data[0]);
+  answerParts[0]= ((65536-32768) >> 8) & 0xff;
+  answerParts[1]= (65536-32768) & 0xff;
+  ASSERT_EQ("int16 : content", answerParts[0], data[1]);
+  ASSERT_EQ("int16 : content", answerParts[1], data[2]);
+
+  ASSERT("int16 : packing should succeed",0==chinookpack_pack_int16(&pk,-1));
+  ASSERT_EQ("int16 : type header", (char)0xd1, data[0]);
+  answerParts[0]= ((65536-1) >> 8) & 0xff;
+  answerParts[1]= (65536-1) & 0xff;
+  ASSERT_EQ("int16 : content", answerParts[0], data[1]);
+  ASSERT_EQ("int16 : content", answerParts[1], data[2]);
 }
 
 /* // Float */

@@ -25,7 +25,7 @@
   if (expected != actual) {                               \
     fprintf(stderr,                                       \
             "%s :: in %s on line %d: %s != %s"            \
-            " expected %d, got %d\n",                     \
+            " expected %x, got %x\n",                     \
             message,                                      \
             __FILE__,                                     \
             __LINE__,                                     \
