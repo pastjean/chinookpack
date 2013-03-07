@@ -96,47 +96,60 @@ inline void chinookpack_packer_free(chinookpack_packer* pk)
 
 // Nil
 static int chinookpack_pack_nil(chinookpack_packer* pk){
-  char nildata[] = {0xc0};
+  char buf[] = {0xc0};
 
-  return pk->callback(pk->data, nildata,1);
+  return pk->callback(pk->data, buf,1);
 }
 
 // Boolean 
 static int chinookpack_pack_true(chinookpack_packer* pk){
-  char truedata[] = {0xc3};
+  char buf[] = {0xc3};
 
-  return pk->callback(pk->data, truedata,1);
+  return pk->callback(pk->data, buf,1);
 }
 static int chinookpack_pack_false(chinookpack_packer* pk){
-  char falsedata[] = {0xc2};
+  char buf[] = {0xc2};
 
-  return pk->callback(pk->data, falsedata,1);
+  return pk->callback(pk->data, buf,1);
 }
 
 static int chinookpack_pack_uint8(chinookpack_packer* pk, uint8_t d){
-  char uint8data[2] = { 0xcc, d }; 
+  char buf[2] = { 0xcc, d }; 
 
-  return pk->callback(pk->data, uint8data,2);
+  return pk->callback(pk->data, buf,2);
 }
 
 static int chinookpack_pack_uint16(chinookpack_packer* pk, uint16_t d){
-  char uint16data[3] = { 0xcd, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0x00ff) };
+  char buf[3] = { 0xcd, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0xff) };
 
-  return pk->callback(pk->data, uint16data,3);
+  return pk->callback(pk->data, buf,3);
 }
 
 static int chinookpack_pack_int8(chinookpack_packer* pk, int8_t d){
-  char sint8data[2] = { 0xd0 , d };
+  char buf[2] = { 0xd0 , d };
 
-  return pk->callback(pk->data, sint8data,2);
+  return pk->callback(pk->data, buf,2);
 }
 
 static int chinookpack_pack_int16(chinookpack_packer* pk, int16_t d){
-  char sint16data[3] = { 0xd1, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0x00ff) };
+  char buf[3] = { 0xd1, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0x00ff) };
 
-  return pk->callback(pk->data, sint16data,3);
+  return pk->callback(pk->data, buf,3);
 }
 
 
+static int chinookpack_pack_float(chinookpack_packer* pk, float d){
+
+  union { float f; uint32_t i; } mem;
+	mem.f = d;
+	unsigned char buf[5];
+	buf[0] = 0xca;
+  buf[1] = mem.i >> (8*3) & 0xff;
+  buf[2] = mem.i >> (8*2) & 0xff;
+  buf[3] = mem.i >> (8*1) & 0xff;
+  buf[4] = mem.i >> (8*0) & 0xff;
+
+  return pk->callback(pk->data, buf,5);
+}
 
 #endif
