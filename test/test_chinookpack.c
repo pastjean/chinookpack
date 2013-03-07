@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 #include <chinookpack.h>
+#include <float.h>
+#include <limits.h>
 // Define test functions HEREEEEE
 //extern void test_config();
 
@@ -165,14 +167,14 @@ void test_pack_int16(){
 /* // Float */
 void test_pack_float(){
   unsigned char data[10];
-  unsigned char answerParts[2];
+  unsigned char answerParts[4];
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
 
   int testDataLength = 7;
- // float testData[] = {0.0, 1.0, -1.0, FLT_MIN, FLT_MAX , 1.0/0.0 , -(1.0/0.0)};
-
+  float testData[] = {0.0, 1.0, -1.0, FLT_MIN, FLT_MAX , 1.0/0.0 , -(1.0/0.0)};
+ 
   for(int i = 0; i < testDataLength; i++){
     ASSERT("float : packing should succeed",0==chinookpack_pack_float(&pk,-1));
     ASSERT_EQ("float : type header", (unsigned char)0xca, data[0]);
@@ -182,10 +184,17 @@ void test_pack_float(){
 }
 
 void test_pack_raw(){
+  unsigned char data[10];
   chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
 
   chinookpack_pack_raw(&pk, 3);
   chinookpack_pack_raw_body(&pk, "abc", 3);
+
+  ASSERT("raw : packing should succeed",0==chinookpack_pack_raw(&pk,3));
+  ASSERT("raw body : packing should succeed",0==chinookpack_pack_raw_body(&pk,"abc",3));
+  ASSERT_EQ("float : type header", (unsigned char)0xa3, data[0]);
+
   ASSERT("raw : test unimplemented",0);
 }
 

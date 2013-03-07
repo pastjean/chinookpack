@@ -158,13 +158,13 @@ static int chinookpack_pack_float(chinookpack_packer* pk, float d){
 static int chinookpack_pack_raw(chinookpack_packer* pk, size_t l){
   	if(l < 32) {
 		unsigned char d = 0xa0 | (uint8_t)l;
-    pk->callback(pk->data,&d,1);
+    return pk->callback(pk->data,&d,1);
 	} else if(l < 65536) {
 		unsigned char buf[3];
 		buf[0] = 0xda;
     buf[1] = l >> 8  & 0xff;
     buf[2] = l       & 0xff;
-    pk->callback(pk->data,&buf,3);
+    return pk->callback(pk->data,&buf,3);
 	} else {
 		unsigned char buf[5];
 		buf[0] = 0xdb;
@@ -176,7 +176,7 @@ static int chinookpack_pack_raw(chinookpack_packer* pk, size_t l){
 	}
 }
 static int chinookpack_pack_raw_body(chinookpack_packer* pk, const void* b, size_t l){
-  pk->callback(pk->data,b,l);
+  return pk->callback(pk->data,b,l);
 }
 
 #endif
