@@ -120,7 +120,9 @@ static int chinookpack_pack_uint8(chinookpack_packer* pk, uint8_t d){
 }
 
 static int chinookpack_pack_uint16(chinookpack_packer* pk, uint16_t d){
-  char buf[3] = { 0xcd, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0xff) };
+  char buf[3] = { 0xcd,
+                  (uint8_t)((d >> 8)   & 0xff),
+                  (uint8_t)( d         & 0xff) };
 
   return pk->callback(pk->data, buf,3);
 }
@@ -132,7 +134,9 @@ static int chinookpack_pack_int8(chinookpack_packer* pk, int8_t d){
 }
 
 static int chinookpack_pack_int16(chinookpack_packer* pk, int16_t d){
-  char buf[3] = { 0xd1, ((uint8_t)(d >> 8)) & 0xff, (uint8_t)(d & 0x00ff) };
+  char buf[3] = { 0xd1,
+                  (uint8_t)((d >> 8)   & 0xff),
+                  (uint8_t)( d         & 0xff) };
 
   return pk->callback(pk->data, buf,3);
 }
@@ -141,15 +145,38 @@ static int chinookpack_pack_int16(chinookpack_packer* pk, int16_t d){
 static int chinookpack_pack_float(chinookpack_packer* pk, float d){
 
   union { float f; uint32_t i; } mem;
-	mem.f = d;
-	unsigned char buf[5];
-	buf[0] = 0xca;
-  buf[1] = mem.i >> (8*3) & 0xff;
-  buf[2] = mem.i >> (8*2) & 0xff;
-  buf[3] = mem.i >> (8*1) & 0xff;
-  buf[4] = mem.i >> (8*0) & 0xff;
-
+  mem.f = d;
+  char buf[5];
+  buf[0] = 0xca;
+  buf[1] = mem.i >> 24 & 0xff;
+  buf[2] = mem.i >> 16 & 0xff;
+  buf[3] = mem.i >> 8  & 0xff;
+  buf[4] = mem.i       & 0xff;
   return pk->callback(pk->data, buf,5);
+}
+
+static int chinookpack_pack_raw(chinookpack_packer* pk, size_t l){
+  	if(l < 32) {
+		unsigned char d = 0xa0 | (uint8_t)l;
+    pk->callback(pk->data,&d,1);
+	} else if(l < 65536) {
+		unsigned char buf[3];
+		buf[0] = 0xda;
+    buf[1] = l >> 8  & 0xff;
+    buf[2] = l       & 0xff;
+    pk->callback(pk->data,&buf,3);
+	} else {
+		unsigned char buf[5];
+		buf[0] = 0xdb;
+    buf[1] = l >> 24 & 0xff;
+    buf[2] = l >> 16 & 0xff;
+    buf[3] = l >> 8  & 0xff;
+    buf[4] = l       & 0xff;
+    pk->callback(pk->data,&buf,5);
+	}
+}
+static int chinookpack_pack_raw_body(chinookpack_packer* pk, const void* b, size_t l){
+  pk->callback(pk->data,b,l);
 }
 
 #endif
