@@ -51,7 +51,7 @@ static chinookpack_packer* chinookpack_packer_new(void* data, chinookpack_packer
 static void chinookpack_packer_free(chinookpack_packer* pk);
 
 
-// ## The packing function
+// ## The packing functions
 
 // Nil
 static int chinookpack_pack_nil(chinookpack_packer* pk);
