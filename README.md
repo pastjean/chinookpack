@@ -79,7 +79,7 @@ Encode Data
     chinookpack_packer pk;
     
     // Initialize everything
-    chinookpack_fbuffer_init(&bug,dataArray,15);
+    chinookpack_fbuffer_init(&bug,dataArray,10);
     chinookpack_packer_init(&pk,buf,chinookpack_fbuffer_write);
 
     // And now encode
