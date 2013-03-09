@@ -35,7 +35,7 @@ static inline int chinookpack_fbuffer_write(void* data, const char* buf, unsigne
 {
 	chinookpack_fbuffer* fbuf = (chinookpack_fbuffer*)data;
 
-  if(len > (size-used)) {return -1};
+  if(len > (fbuf->size-fbuf->used)) {return -1;}
 
   fbuf->size += len;
   memcpy(fbuf->data + fbuf->size,buf,len);
