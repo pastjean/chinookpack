@@ -68,115 +68,19 @@ Available types
 </table>
 
 
-Encoding
-========
-
-Integers
---------
-
-### uint8
-
-unsigned 8-bit integer on 2 bytes
-
-    +--------+--------+
-    |  0xcc  |XXXXXXXX|
-    +--------+--------+
-    => unsigned 8-bit XXXXXXXX
-
-### uint16
-
-unsigned 16-bit big-endian integer on 3 bytes
-
-    +--------+--------+--------+
-    |  0xcd  |XXXXXXXX|XXXXXXXX|
-    +--------+--------+--------+
-    => unsigned 16-bit big-endian XXXXXXXX_XXXXXXXX
-
-### int8
-
-signed 8-bit integer on 2 bytes
-
-
-    +--------+--------+
-    |  0xd0  |XXXXXXXX|
-    +--------+--------+
-    => signed 8-bit XXXXXXXX
-
-
-### int16
-
-signed 16-bit big-endian integer on 3 bytes
-
-    +--------+--------+--------+
-    |  0xd1  |XXXXXXXX|XXXXXXXX|
-    +--------+--------+--------+
-    => signed 16-bit big-endian XXXXXXXX_XXXXXXXX
-
-
-Boolean
--------
-
-### true
-
-    +--------+
-    |  0xc3  |
-    +--------+
-
-### false
-
-
-    +--------+
-    |  0xc2  |
-    +--------+
-
-Floating point
---------------
-
-### float
-
-Big endian IEEE 754 on 5 bytes
-
-    +--------+--------+--------+--------+--------+
-    |  0xca  |XXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX|
-    +--------+--------+--------+--------+--------+
-    => big-endian IEEE 754 single precision floating point number XXXXXXXX_XXXXXXXX_XXXXXXXX_XXXXXXXX
-
-Raw bytes
----------
-
-### fix raw
-
-raw bytes up to 31 bytes.
-
-    +--------+--------
-    |101XXXXX|...N bytes
-    +--------+--------
-    => 000XXXXXX (=N) bytes of raw bytes.
-
 Usage
 =====
 
-    chinookpack_parser_init
-    chinookpack_parser_finish
-    chinookpack_parser_execute
-    chinookpack_parser_has_errors
+Encode Data
+-----------
 
-The CAN Protocol
-================
+    char* dataArray[10];
+    chinookpack_fbuffer buf;
+    chinookpack_packer pk;
+    
+    // Initialize everything
+    chinookpack_fbuffer_init(&bug,dataArray,15);
+    chinookpack_packer_init(&pk,buf,chinookpack_fbuffer_write);
 
-Definition of our can data format
-
-### Fields
-
-    {
-      can id, // ID of the logical device, a different id is used to set or get a value
-      can length, // The length of the data field
-      data field // The data encoded with chinookpack
-    }
-Protocol segmentation in bit
-
-    ... | can id | ... | length | ... |  data field   |
-    ... |   11   | ... |   4    | ... |     1 - 64    |
-
-    **size in bit**
-
+    // And now encode
+    chinookpack_pack_uint8(&pk,127);
