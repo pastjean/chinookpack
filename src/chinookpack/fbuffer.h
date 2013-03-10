@@ -19,8 +19,8 @@
 //
 
 typedef struct chinookpack_fbuffer {
-	size_t size;
-  size_t used;
+	unsigned int size;
+  unsigned int used;
 	char* data;
 } chinookpack_fbuffer;
 
@@ -31,14 +31,14 @@ static inline void chinookpack_fbuffer_init(chinookpack_fbuffer* fbuf, char* dat
   fbuf->used = 0;
 }
 
-static inline int chinookpack_fbuffer_write(void* data, const char* buf, unsigned int len)
+static inline int chinookpack_fbuffer_write(void* fbuffer, const char* buf, unsigned int len)
 {
-	chinookpack_fbuffer* fbuf = (chinookpack_fbuffer*)data;
+	chinookpack_fbuffer* fbuf = (chinookpack_fbuffer*)fbuffer;
 
   if(len > (fbuf->size-fbuf->used)) {return -1;}
 
-  fbuf->size += len;
-  memcpy(fbuf->data + fbuf->size,buf,len);
+  memcpy(fbuf->data + fbuf->used,buf,len);
+  fbuf->used += len;
 	return 0;
 }
 
@@ -46,6 +46,7 @@ static inline int chinookpack_fbuffer_write(void* data, const char* buf, unsigne
 static inline void chinookpack_fbuffer_clear(chinookpack_fbuffer* fbuf)
 {
 	fbuf->used = 0;
+  memset(fbuf->data,'\0',fbuf->size);
 }
 
 

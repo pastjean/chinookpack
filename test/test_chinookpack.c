@@ -166,9 +166,12 @@ void test_pack_int16(){
 
 /* // Float */
 void test_pack_float(){
+  union { float f; uint32_t i; } mem;
   unsigned char data[10];
-  unsigned char answerParts[4];
+  unsigned char* equal = "abc";
+  chinookpack_fbuffer fbuf;
   chinookpack_packer pk;
+  chinookpack_fbuffer_init(&fbuf,&data,10);
   chinookpack_packer_init(&pk, data, array_10_write);
 
 
@@ -176,34 +179,48 @@ void test_pack_float(){
   float testData[] = {0.0, 1.0, -1.0, FLT_MIN, FLT_MAX , 1.0/0.0 , -(1.0/0.0)};
  
   for(int i = 0; i < testDataLength; i++){
-    ASSERT("float : packing should succeed",0==chinookpack_pack_float(&pk,-1));
+    chinookpack_fbuffer_clear(&fbuf);
+    mem.f=testData[i];
+    ASSERT("float : packing should succeed",0==chinookpack_pack_float(&pk,testData[i]));
     ASSERT_EQ("float : type header", (unsigned char)0xca, data[0]);
+    ASSERT_EQ("float : part 1",(mem.i >> 24 & 0xff), data[1]);
+    ASSERT_EQ("float : part 1",(mem.i >> 16 & 0xff), data[2]);
+    ASSERT_EQ("float : part 1",(mem.i >> 8  & 0xff), data[3]);
+    ASSERT_EQ("float : part 1",(mem.i       & 0xff), data[4]);
   }
-
-    ASSERT("float : test unimplemented", 0);
 }
 
 void test_pack_raw(){
   unsigned char data[10];
+  
+  chinookpack_fbuffer fbuf;
   chinookpack_packer pk;
-  chinookpack_packer_init(&pk, data, array_10_write);
-
-  chinookpack_pack_raw(&pk, 3);
-  chinookpack_pack_raw_body(&pk, "abc", 3);
+  chinookpack_fbuffer_init(&fbuf,&data,10);
+  chinookpack_packer_init(&pk, &fbuf, chinookpack_fbuffer_write);
 
   ASSERT("raw : packing should succeed",0==chinookpack_pack_raw(&pk,3));
+  ASSERT_EQ("raw : type header", (unsigned int)0xa3, (unsigned int)data[0]);
   ASSERT("raw body : packing should succeed",0==chinookpack_pack_raw_body(&pk,"abc",3));
-  ASSERT_EQ("float : type header", (unsigned char)0xa3, data[0]);
-
-  ASSERT("raw : test unimplemented",0);
+  ASSERT("raw body : data packing",0==strncmp("abc",&(data[1]),3));
+  //ASSERT("raw : test unimplemented",0);
 }
 
-// Nil
+
+void test_fbuffer(){
+
+  unsigned char data[10];
+  unsigned char* equal = "abc";
+  chinookpack_fbuffer fbuf;
+  chinookpack_fbuffer_init(&fbuf,&data,10);
+
+  chinookpack_fbuffer_write(&fbuf,"abc",3);
+  chinookpack_fbuffer_write(&fbuf,"abc",3);
 
 
-
-
-// Raw
+  for(int i=0;i<6;i++){
+    ASSERT_EQ("data",data[i],equal[i%3]);
+  }
+}
 
 // The runner
 int main(int argc,char** argv){
@@ -214,6 +231,7 @@ int main(int argc,char** argv){
 
   // Add your test functions here
   tt_add(suite,"test packer structure",&test_packer);
+  tt_add(suite,"test fbuffer",&test_fbuffer);
   tt_add(suite,"nil packing",&test_pack_nil);
   tt_add(suite,"true packing",&test_pack_true);
   tt_add(suite,"false packing",&test_pack_false);
