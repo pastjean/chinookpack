@@ -36,6 +36,7 @@ int tt_run(tt_suite* suite,int argc, char** argv){
       failed = 0;
 
   for(tt_test* t = suite->head;  t != NULL; t = t->next){
+    total++;
     test_failed = 0;
 
     printf("Running: %s ", t->name);
