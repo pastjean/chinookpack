@@ -3,7 +3,9 @@
 
 
 #include "sysdep.h"
-#include "chinookpack/pack.h"
 #include "chinookpack/fbuffer.h"
+#include "chinookpack/pack.h"
+#include "chinookpack/unpack.h"
+#include "chinookpack/object.h"
 
 #endif
