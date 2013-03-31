@@ -13,27 +13,11 @@ bool chinookpack_unpack_next(chinookpack_unpacked* result,
 		const char* buf, size_t len, size_t* off);
 
 static inline void chinookpack_unpacked_init(chinookpack_unpacked* result){
-  result->data.type = CHINOOKPACK_OBJECT_BOOLEAN;
-  result->data.via.boolean = false;
+  result->data.type = CHINOOKPACK_OBJECT_NIL;
 }
-
 
 bool chinookpack_unpack_next(chinookpack_unpacked* result,
-		const char* buf, size_t len, size_t* off){
-
-	size_t noff = 0;
-	if(off != NULL) { noff = *off; }
-
-
-	if(len <= noff) {
-		return false;
-	}
-
-  // TODO: DO SHITS HERE
-
-	if(off != NULL) { *off = noff; }
-  return true;
-}
+		const char* buf, size_t len, size_t* off);
 
 #endif
 

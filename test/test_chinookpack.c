@@ -137,27 +137,27 @@ void test_pack_int8(){
   ASSERT_EQ("int8 : content", (unsigned char)(256-1), data[1]);
 }
 void test_pack_int16(){
-  unsigned char data[10];
-  unsigned char answerParts[2];
+  char data[10];
+  char answerParts[2];
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
 
   ASSERT("int16 : packing should succeed",0==chinookpack_pack_int16(&pk,32767));
-  ASSERT_EQ("int16 : type header", (unsigned char)0xd1, data[0]);
+  ASSERT_EQ("int16 : type header", (char)0xd1, data[0]);
   answerParts[0]= (32767 >> 8) & 0xff;
   answerParts[1]= 32767 & 0xff;
   ASSERT_EQ("int16 : content", answerParts[0], data[1]);
   ASSERT_EQ("int16 : content", answerParts[1], data[2]);
 
   ASSERT("int16 : packing should succeed",0==chinookpack_pack_int16(&pk,-32768));
-  ASSERT_EQ("int16 : type header", (unsigned char)0xd1, data[0]);
+  ASSERT_EQ("int16 : type header", (char)0xd1, data[0]);
   answerParts[0]= ((65536-32768) >> 8) & 0xff;
   answerParts[1]= (65536-32768) & 0xff;
   ASSERT_EQ("int16 : content", answerParts[0], data[1]);
   ASSERT_EQ("int16 : content", answerParts[1], data[2]);
 
   ASSERT("int16 : packing should succeed",0==chinookpack_pack_int16(&pk,-1));
-  ASSERT_EQ("int16 : type header", (unsigned char)0xd1, data[0]);
+  ASSERT_EQ("int16 : type header", (char)0xd1, data[0]);
   answerParts[0]= ((65536-1) >> 8) & 0xff;
   answerParts[1]= (65536-1) & 0xff;
   ASSERT_EQ("int16 : content", answerParts[0], data[1]);
@@ -167,11 +167,10 @@ void test_pack_int16(){
 /* // Float */
 void test_pack_float(){
   union { float f; uint32_t i; } mem;
-  unsigned char data[10];
-  unsigned char* equal = "abc";
+  char data[10];
   chinookpack_fbuffer fbuf;
   chinookpack_packer pk;
-  chinookpack_fbuffer_init(&fbuf,&data,10);
+  chinookpack_fbuffer_init(&fbuf,data,10);
   chinookpack_packer_init(&pk, data, array_10_write);
 
 
@@ -182,7 +181,7 @@ void test_pack_float(){
     chinookpack_fbuffer_clear(&fbuf);
     mem.f=testData[i];
     ASSERT("float : packing should succeed",0==chinookpack_pack_float(&pk,testData[i]));
-    ASSERT_EQ("float : type header", (unsigned char)0xca, data[0]);
+    ASSERT_EQ("float : type header", 0xca, data[0]);
     ASSERT_EQ("float : part 1",(mem.i >> 24 & 0xff), data[1]);
     ASSERT_EQ("float : part 1",(mem.i >> 16 & 0xff), data[2]);
     ASSERT_EQ("float : part 1",(mem.i >> 8  & 0xff), data[3]);
@@ -191,11 +190,11 @@ void test_pack_float(){
 }
 
 void test_pack_raw(){
-  unsigned char data[10];
+  char data[10];
   
   chinookpack_fbuffer fbuf;
   chinookpack_packer pk;
-  chinookpack_fbuffer_init(&fbuf,&data,10);
+  chinookpack_fbuffer_init(&fbuf,data,10);
   chinookpack_packer_init(&pk, &fbuf, chinookpack_fbuffer_write);
 
   ASSERT("raw : packing should succeed",0==chinookpack_pack_raw(&pk,3));
@@ -208,10 +207,10 @@ void test_pack_raw(){
 
 void test_fbuffer(){
 
-  unsigned char data[10];
-  unsigned char* equal = "abc";
+  char data[10];
+  char* equal = "abc";
   chinookpack_fbuffer fbuf;
-  chinookpack_fbuffer_init(&fbuf,&data,10);
+  chinookpack_fbuffer_init(&fbuf,data,10);
 
   chinookpack_fbuffer_write(&fbuf,"abc",3);
   chinookpack_fbuffer_write(&fbuf,"abc",3);

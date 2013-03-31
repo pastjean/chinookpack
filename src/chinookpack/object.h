@@ -2,20 +2,13 @@
 #define chinookpack_object_h
 
 typedef enum {
-  NIL              = 0x00,
-  BOOLEAN          = 0x01,
-  POSITIVE_INTEGER = 0x02,
-  NEGATIVE_INTEGER = 0x03,
-  DOUBLE           = 0x04,
-  RAW              = 0x05,
+  CHINOOKPACK_OBJECT_NIL,
+  CHINOOKPACK_OBJECT_BOOLEAN,
+  CHINOOKPACK_OBJECT_POSITIVE_INTEGER,
+  CHINOOKPACK_OBJECT_NEGATIVE_INTEGER,
+  CHINOOKPACK_OBJECT_DOUBLE,
+  CHINOOKPACK_OBJECT_RAW,
 } chinookpack_object_type;
-
-#define CHINOOKPACK_OBJECT_NIL              chinookpack_object_type.NIL
-#define CHINOOKPACK_OBJECT_BOOLEAN          chinookpack_object_type.BOOLEAN
-#define CHINOOKPACK_OBJECT_POSITIVE_INTEGER chinookpack_object_type.POSITIVE_INTEGER
-#define CHINOOKPACK_OBJECT_NEGATIVE_INTEGER chinookpack_object_type.NEGATIVE_INTEGER
-#define CHINOOKPACK_OBJECT_DOUBLE           chinookpack_object_type.DOUBLE
-#define CHINOOKPACK_OBJECT_RAW              chinookpack_object_type.RAW
 
 typedef struct {
   uint32_t size;
