@@ -41,29 +41,29 @@ Available types
     <tr>
         <th rowspan="4">Integer</th>
         <td>uint8</td>
-        <td><code>0xcc</code></td>
+        <td><code>0xcc??</code></td>
     </tr>
     <tr>
         <td>uint16</td>
-        <td><code>0xcd</code></td>
+        <td><code>0xcd????</code></td>
     </tr>
     <tr>
         <td>int8</td>
-        <td><code>0xd0</code></td>
+        <td><code>0xd0??</code></td>
     </tr>
     <tr>
         <td>int16</td>
-        <td><code>0xd1</code></td>
+        <td><code>0xd1????</code></td>
     </tr>
     <tr>
         <th>Floating Point</th>
         <td>float</td>
-        <td><code>0xca</code></td>
+        <td><code>0xca????</code></td>
     </tr>
     <tr>
         <th>Raw bytes</th>
         <td>fix raw</td>
-        <td><code>101XXXXX</code></td>
+        <td><code>101XXXXX</code>(<code>X</code> is length in bytes)</td>
     </tr>
 </table>
 
