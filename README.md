@@ -74,7 +74,7 @@ Usage
 Encode Data
 -----------
 
-    char* dataArray[10];
+    char dataArray[10];
     chinookpack_fbuffer buf;
     chinookpack_packer pk;
     
