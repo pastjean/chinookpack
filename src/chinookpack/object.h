@@ -28,8 +28,5 @@ typedef struct chinookpack_object {
   chinookpack_object_union via;
 } chinookpack_object;
 
-
-void chinookpack_object_print(FILE* out, chinookpack_object o);
-
 #endif
 

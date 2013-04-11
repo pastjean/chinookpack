@@ -41,7 +41,7 @@ all: test
 # Compile the library itself
 # ---------------------------------------------------------------------
 
-CHINOOKPACK_OBJ=
+CHINOOKPACK_OBJ := $(patsubst src/%,src/obj/%,$(patsubst %.c, %.o,$(wildcard src/*.c)))
 INCLUDES=-Isrc
 
 
@@ -86,4 +86,4 @@ clean:
 	rm -rf src/obj test/obj $(TEST_BIN)
 
 
-
+.PHONY: test
