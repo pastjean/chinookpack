@@ -14,19 +14,55 @@ static inline int callback_false(chinookpack_object* o, const char* buf, size_t*
 { o->type = CHINOOKPACK_OBJECT_BOOLEAN; o->via.boolean = false; return 0; }
 
 static inline int callback_uint8(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_POSITIVE_INTEGER; o->via.boolean = false; return 0; }
+{
+  o->type = CHINOOKPACK_OBJECT_UINT8; 
+  o->via.u64 = 0;
+  o->via.u64 = buf[*off] & 0xff;
+  (*off) +=1;
+  return 0; 
+}
 
 static inline int callback_uint16(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_POSITIVE_INTEGER; o->via.boolean = false; return 0; }
+{ 
+  o->type = CHINOOKPACK_OBJECT_UINT16; 
+  o->via.u64 = 0;
+  o->via.u64 = (buf[*off]<<8) & 0xff00;
+  o->via.u64 = (buf[*off+1]) & 0xff;
+  (*off) +=2;
+  return 0; 
+}
 
 static inline int callback_int8(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_POSITIVE_INTEGER; o->via.boolean = false; return 0; }
+{ 
+  o->type = CHINOOKPACK_OBJECT_INT8; 
+  o->via.i64 = 0;
+  o->via.i64 = buf[*off] & 0xff;
+  (*off) +=1;
+  return 0;
+}
 
 static inline int callback_int16(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_POSITIVE_INTEGER; o->via.boolean = false; return 0; }
+{ 
+  o->type = CHINOOKPACK_OBJECT_INT16; 
+  o->via.i64 = 0;
+  o->via.i64 = (buf[*off]<<8) & 0xff00;
+  o->via.i64 = (buf[*off+1]) & 0xff;
+  (*off) +=2;
+  return 0; 
+}
 
 static inline int callback_float(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_POSITIVE_INTEGER; o->via.boolean = false; return 0; }
+{ 
+  union { float f; uint32_t i; } mem;
+  mem.i = (buf[*off] << 24)
+         |(buf[*off+1] <<16)
+         |(buf[*off+2] << 8)
+         |(buf[*off+3]);
+  o->type = CHINOOKPACK_OBJECT_FLOAT; 
+  o->via.dec = mem.f;
+  (*off)+=4;
+  return 0; 
+}
 
 
 bool chinookpack_unpack_next(chinookpack_unpacked* result,
@@ -48,7 +84,7 @@ bool chinookpack_unpack_next(chinookpack_unpacked* result,
   // second : make a big switch or something less good to see :) (gotos)
   //          or use a tool that would do it for you boy (ragel state machine compiler)
   unsigned char header = mbuf[0];
-
+  noff+=1;
   // special raw case
   if( (0xa0 & header)  == 0xa0){
     //TODO: handle raw

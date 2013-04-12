@@ -84,3 +84,8 @@ Encode Data
 
     // And now encode
     chinookpack_pack_uint8(&pk,127);
+
+Decode data
+-----------
+
+    // TODO: write the decoding procedure
