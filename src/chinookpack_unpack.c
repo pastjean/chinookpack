@@ -5,13 +5,19 @@ typedef void unpack_user;
 typedef  int (*callback_interface)(chinookpack_object*, const char* , size_t*);
 
 static inline int callback_nil(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_NIL; return 0; }
+{ 
+  o->type = CHINOOKPACK_OBJECT_NIL; return 0; 
+}
 
 static inline int callback_true(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_BOOLEAN; o->via.boolean = true; return 0; }
+{ 
+  o->type = CHINOOKPACK_OBJECT_BOOLEAN; o->via.boolean = true; return 0; 
+}
 
 static inline int callback_false(chinookpack_object* o, const char* buf, size_t* off)
-{ o->type = CHINOOKPACK_OBJECT_BOOLEAN; o->via.boolean = false; return 0; }
+{ 
+  o->type = CHINOOKPACK_OBJECT_BOOLEAN; o->via.boolean = false; return 0; 
+}
 
 static inline int callback_uint8(chinookpack_object* o, const char* buf, size_t* off)
 {
@@ -72,7 +78,6 @@ bool chinookpack_unpack_next(chinookpack_unpacked* result,
 	if(off != NULL) { noff = *off; }
   else { return false;}
 
-  const char* mbuf = buf + *off;
 
 	if(len <= noff) {
 		return false;
@@ -83,7 +88,8 @@ bool chinookpack_unpack_next(chinookpack_unpacked* result,
   // first : get the type header
   // second : make a big switch or something less good to see :) (gotos)
   //          or use a tool that would do it for you boy (ragel state machine compiler)
-  unsigned char header = mbuf[0];
+  char header = 0;
+  header = buf[noff];
   noff+=1;
   // special raw case
   if( (0xa0 & header)  == 0xa0){
@@ -93,10 +99,9 @@ bool chinookpack_unpack_next(chinookpack_unpacked* result,
     goto ENDOF_CHINOOK_PACK_UNPACK_NEXT;
   }
   
-
   callback_interface callback_pointer = NULL;
 
-  switch(header){
+  switch( (header & 0xff) ){
     case 0xc0:
       callback_pointer = callback_nil;
       break;
@@ -127,7 +132,7 @@ bool chinookpack_unpack_next(chinookpack_unpacked* result,
   }
   
   if(callback_pointer != NULL){
-  // TODO: EXECUTER LE POINTEUR ET AVANCER LE OFFSET POINT
+    callback_pointer(&(result->data),buf,&noff);
   }
 
 

@@ -79,7 +79,7 @@ test: $(TEST_BIN)
 # Task that compiles the test runner
 $(TEST_BIN): $(CHINOOKPACK_OBJ) $(TEST_OBJ)
 	@echo $(MAKECOLOR)MAKE$(ENDCOLOR) $(BINCOLOR)test-chinookpack$(ENDCOLOR)
-	$(QUIET_LINK) $(CC) $(CFLAGS) -o $(TEST_BIN) $(TEST_OBJ) $(INCLUDES) $(FUJIN_LIB_DEPS)
+	$(QUIET_LINK) $(CC) $(CFLAGS) -o $(TEST_BIN) $(TEST_OBJ) $(CHINOOKPACK_OBJ) $(INCLUDES) $(FUJIN_LIB_DEPS)
 
 
 clean:

@@ -62,11 +62,27 @@ void test_packer(){
   chinookpack_packer_free(pk2);
 }
 
+void test_unpack(){
+  unsigned char data[10];
+  size_t off = 0;
+  chinookpack_packer pk;
+  chinookpack_packer_init(&pk, data, array_10_write);
+
+  ASSERT_EQ("Packing a true should succeed",0,chinookpack_pack_true(&pk));
+  ASSERT_EQ("There should be an encoded true in the data", (uint8_t)0xc3, data[0]);
+
+  chinookpack_unpacked unpacker;
+  chinookpack_unpacked_init(&unpacker);
+  chinookpack_unpack_next(&unpacker,data,10,&off);
+  printf("OH %i \n",unpacker.data.type == CHINOOKPACK_OBJECT_BOOLEAN);
+  printf("OH %i \n",unpacker.data.via.boolean == true);
+}
 // Nil
 void test_pack_nil(){
   unsigned char data[10];
   chinookpack_packer pk;
   chinookpack_packer_init(&pk, data, array_10_write);
+
 
   ASSERT_EQ("Packing a nil should succeed",0, chinookpack_pack_nil(&pk));
   ASSERT_EQ("There should be an encoded nil in the data", (unsigned char)0xc0, data[0]);
@@ -240,6 +256,6 @@ int main(int argc,char** argv){
   tt_add(suite,"int16 packing",&test_pack_int16);
   tt_add(suite,"float packing",&test_pack_float);
   tt_add(suite,"raw packing",&test_pack_raw);
-  
+  tt_add(suite,"test unpacking",&test_unpack);
   return tt_run(suite,argc,argv);
 }
