@@ -52,7 +52,7 @@ static inline int callback_int16(chinookpack_object* o, const char* buf, size_t*
   o->type = CHINOOKPACK_OBJECT_INT16; 
   o->via.i64 = 0;
   o->via.i64 = (buf[*off]<<8) & 0xff00;
-  o->via.i64 = (buf[*off+1]) & 0xff;
+  o->via.i64 = (buf[*off+1*sizeof(char)]) & 0xff;
   (*off) +=2;
   return 0; 
 }
@@ -61,9 +61,9 @@ static inline int callback_float(chinookpack_object* o, const char* buf, size_t*
 { 
   union { float f; uint32_t i; } mem;
   mem.i = (buf[*off] << 24)
-         |(buf[*off+1] <<16)
-         |(buf[*off+2] << 8)
-         |(buf[*off+3]);
+         |(buf[*off+1*sizeof(char)] <<16)
+         |(buf[*off+2*sizeof(char)] << 8)
+         |(buf[*off+3*sizeof(char)]);
   o->type = CHINOOKPACK_OBJECT_FLOAT; 
   o->via.dec = mem.f;
   (*off)+=4;

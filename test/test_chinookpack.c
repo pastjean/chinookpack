@@ -74,8 +74,8 @@ void test_unpack(){
   chinookpack_unpacked unpacker;
   chinookpack_unpacked_init(&unpacker);
   chinookpack_unpack_next(&unpacker,data,10,&off);
-  printf("OH %i \n",unpacker.data.type == CHINOOKPACK_OBJECT_BOOLEAN);
-  printf("OH %i \n",unpacker.data.via.boolean == true);
+  ASSERT_EQ("OH %i \n",unpacker.data.type,CHINOOKPACK_OBJECT_BOOLEAN);
+  ASSERT_EQ("OH %i \n",unpacker.data.via.boolean,true);
 }
 // Nil
 void test_pack_nil(){
