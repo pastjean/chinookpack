@@ -1,3 +1,2 @@
-language: c
-compiler: clang
+image: gcc4.8
 script: make test
