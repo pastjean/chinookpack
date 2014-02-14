@@ -1,4 +1,4 @@
 image: bradrydzewski/gcc
 script: 
-  - echo "hello world!"
+  - echo "hello world! testing drone"
   - make test
