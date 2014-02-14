@@ -1,2 +1,4 @@
 image: gcc4.8
-script: make test
+script: 
+  - echo hello
+  - make test
